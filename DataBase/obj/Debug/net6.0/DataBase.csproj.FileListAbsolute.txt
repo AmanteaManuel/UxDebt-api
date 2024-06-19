@@ -1,0 +1,14 @@
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\bin\Debug\net6.0\DataBase.deps.json
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\bin\Debug\net6.0\DataBase.runtimeconfig.json
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\bin\Debug\net6.0\DataBase.dll
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\bin\Debug\net6.0\DataBase.pdb
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\obj\Debug\net6.0\DataBase.csproj.AssemblyReference.cache
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\obj\Debug\net6.0\DataBase.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\obj\Debug\net6.0\DataBase.AssemblyInfoInputs.cache
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\obj\Debug\net6.0\DataBase.AssemblyInfo.cs
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\obj\Debug\net6.0\DataBase.csproj.CoreCompileInputs.cache
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\obj\Debug\net6.0\DataBase.dll
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\obj\Debug\net6.0\refint\DataBase.dll
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\obj\Debug\net6.0\DataBase.pdb
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\obj\Debug\net6.0\DataBase.genruntimeconfig.cache
+C:\Repo\net core\TrabajoFinal-OO2\UxDebt\DataBase\obj\Debug\net6.0\ref\DataBase.dll
