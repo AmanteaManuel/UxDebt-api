@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
 using UxDebt.Context;
 using UxDebt.Entities;
 using UxDebt.Models.Response;
@@ -15,6 +13,7 @@ namespace UxDebt.Services
     {
         private readonly UxDebtContext _context;
         private readonly IMapper _mapper;
+
         public IssueService(UxDebtContext context, IMapper mapper)
         {
             _context = context;
@@ -134,8 +133,8 @@ namespace UxDebt.Services
                         .ThenInclude(issueTag => issueTag.Tag)
                     .ToListAsync();
 
-                var issueViewModels = _mapper.Map<List<GetIssueViewModel>>(issuesWithTags);
-
+                var issueViewModels = _mapper.Map<List<GetIssueViewModel>>(issuesWithTags);                 
+                
                 return issueViewModels;
             }
             catch (Exception ex)
@@ -143,7 +142,8 @@ namespace UxDebt.Services
                 // Manejo de excepciones
                 throw new Exception(ex.Message);
             }
-        }       
+        }
+        
 
         public async Task<bool> SwitchDiscarded(int id)
         {
@@ -178,10 +178,11 @@ namespace UxDebt.Services
 
                 // Combine filtering logic using LINQ Where clauses (more efficient)
                 var filteredIssues = issues.Where(issue =>
-                    (filter.Title == null || issue.Title == filter.Title) &&
+                    (filter.Title == null ||  issue.Title.ToLower().Contains(filter.Title.ToLower())) &&
                     (filter.Discarded == null || issue.Discarded == filter.Discarded) &&
                     (filter.Status == null || issue.Status == filter.Status) &&
-                    (filter.CreatedAt == null || issue.CreatedAt == filter.CreatedAt));
+                    (filter.RepositoryId == null || issue.RepositoryId == filter.RepositoryId) &&
+                    (filter.CreatedAt == null || issue.CreatedAt.Date == filter.CreatedAt?.Date));
 
                 // Tag filtering using LINQ Any with pre-compiled predicate for efficiency
                 if (filter.Tags != null && filter.Tags.Any())

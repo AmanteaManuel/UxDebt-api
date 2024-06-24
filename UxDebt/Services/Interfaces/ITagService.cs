@@ -6,7 +6,7 @@ namespace UxDebt.Services.Interfaces
 {
     public interface ITagService
     {
-        Task<int> AddTagToIssue(string codeTag, int issueId);
+        Task<int> AddTagToIssue(List<int> tagsId, int issueId);
         Task<int> Create(TagViewModel tag);
         Task<bool> Delete(int id);
         Task<Tag> Get(int id);

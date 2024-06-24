@@ -16,7 +16,8 @@ namespace UxDebt.Models.ViewModel
         public DateTime CreatedAt { get; set; }
         public DateTime? ClosedAt { get; set; }
         public string? Observation { get; set; }
-        public Repository? Repository { get; set; }
+        public int? RepositoryId { get; set; }
+        public string? RepositoryName { get; set; }
         public virtual ICollection<Tag>? Tags { get; set; }
     }
 }

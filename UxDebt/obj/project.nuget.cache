@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CQTzvQbG2FxZNkluL564UZfMKBerZ4EzR97N0iGlgEWjsAzB+pefJXGKPMaB1KrC3bJhrMlOQRNP/mfW8z2Jsg==",
+  "dgSpecHash": "8ucxX/hR7T/WDHSPedrg/lSzjub6thkd2Yjz77We4RC+BNKHIoS4m1+jfK3qjBcYwywTq4HLXsp2YtsSJ4rMOA==",
   "success": true,
-  "projectFilePath": "C:\\Repo\\net core\\TrabajoFinal-OO2\\UxDebt\\UxDebt\\UxDebt.csproj",
+  "projectFilePath": "C:\\UxDebt\\UxDebt-api\\UxDebt\\UxDebt.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MAmantea.OND\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\MAmantea.OND\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

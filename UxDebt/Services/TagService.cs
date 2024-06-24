@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using UxDebt.Context;
 using UxDebt.Entities;
 using UxDebt.Models.Entities;
@@ -20,7 +21,7 @@ namespace UxDebt.Services
             _mapper = mapper;
         }
 
-        public async Task<int> AddTagToIssue(string codeTag, int issueId)
+        public async Task<int> AddTagToIssue(List<int> tagsId, int issueId)
         {
             try
             {
@@ -31,31 +32,52 @@ namespace UxDebt.Services
                     throw new Exception("Issue not found.");
                 }
 
+
                 // Obtener el tag
-                var tag = await _context.Tags.FirstOrDefaultAsync(t => t.Code == codeTag);
-                if (tag == null)
+                var tags = _context.Tags.Where(t => tagsId.Contains(t.TagId));                
+                if (tags != null)
                 {
-                    throw new Exception("Tag not found.");
+                    if(tags.Count() != tagsId.Count())
+                        throw new Exception("At least one tag was not found.");
                 }
+                else
+                    throw new Exception("No tags were found.");
 
-                // Verificar si la relación ya existe
-                var existingIssueTag = await _context.IssueTags.FirstOrDefaultAsync(it => it.IssueId == issueId && it.TagId == tag.TagId);
-                if (existingIssueTag != null)
+                //busco los tags que no estan en el issue pero si en la lista
+                var existingIssueTags = await _context.IssueTags
+                    .Where(it => it.IssueId == issueId)
+                    .ToListAsync();
+
+                var tagsToRemove = existingIssueTags
+                    .Where(it => !tagsId.Contains(it.TagId))
+                    .ToList();
+
+                _context.IssueTags.RemoveRange(tagsToRemove);
+
+                // Verificar si la relación ya existe 
+                foreach (int tagId in tagsId)
                 {
-                    return -1; // La relación ya existe
+                    //busco el tag en el issue
+                    var existingIssueTag = await _context.IssueTags.AnyAsync(it => it.IssueId == issueId && it.TagId == tagId);
+
+                    //si al rel NO existe la agrego
+                    if (!existingIssueTag)
+                    {
+
+                        // Crear la relación en la tabla de unión
+                        var issueTag = new IssueTag
+                        {
+                            IssueId = issueId,
+                            TagId = tagId
+                        };
+                        _context.IssueTags.Add(issueTag);                        
+                    }                    
+
                 }
-
-                // Crear la relación en la tabla de unión
-                var issueTag = new IssueTag
-                {
-                    IssueId = issueId,
-                    TagId = tag.TagId
-                };
-                _context.IssueTags.Add(issueTag);
 
                 // Guardar cambios
-                await _context.SaveChangesAsync();
-                return issueTag.IssueTagId;
+                return await _context.SaveChangesAsync();
+                
             }
             catch (Exception ex)
             {

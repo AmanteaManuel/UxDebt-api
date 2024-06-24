@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 using UxDebt.Context;
 using UxDebt.Entities;
+using UxDebt.Models.Response.Dtos;
 using UxDebt.Models.ViewModel;
 using UxDebt.Services.Interfaces;
 
@@ -133,6 +135,6 @@ namespace UxDebt.Services
                 // Manejo de excepciones
                 throw new Exception(ex.Message);
             }
-        }
+        }        
     }
 }

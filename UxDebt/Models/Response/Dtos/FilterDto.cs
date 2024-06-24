@@ -9,6 +9,7 @@ namespace UxDebt.Models.Response.Dtos
         public DateTime? CreatedAt { get; set; }
         public bool? Discarded { get; set; }
         public Status? Status { get; set; }
+        public int? RepositoryId { get; set; }
         public List<int>? Tags { get; set; }
         public List<int>? Labels { get; set; }
         

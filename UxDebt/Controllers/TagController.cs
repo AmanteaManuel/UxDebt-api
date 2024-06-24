@@ -85,7 +85,7 @@ namespace UxDebt.Controllers
         }
 
         [HttpPost("AddTagToIssue")]
-        public async Task<ActionResult<int>> AddTagToIssue([FromBody] string codeTag, int issueId)
+        public async Task<ActionResult<int>> AddTagToIssue([FromBody] AddTagToIssueViewModel tagsToIssue)
         {
             if (!ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace UxDebt.Controllers
 
             try
             {
-                var id = await _tagService.AddTagToIssue(codeTag,issueId);
+                var id = await _tagService.AddTagToIssue(tagsToIssue.TagsId, tagsToIssue.IssueId);
                 return CreatedAtAction(nameof(Get), new { id = id }, id);
             }
             catch (Exception ex)
