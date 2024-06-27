@@ -26,11 +26,25 @@ namespace UxDebt.Dtos
         public DateTime CreateAt { get; set; }
 
         [JsonProperty("closed_at")]
-        public DateTime? CloseAt { get; set; }
+        public DateTime? ClosedAt { get; set; }
 
         [JsonProperty("labels")]
         public List<Label>? Labels { get;set; }
         public string? Observation { get; set; }
+
+        /// <summary>
+        /// se utiliza para obtener la lista de labels de manera de string
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            if (Labels == null || Labels.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            return string.Join(", ", Labels.Select(label => label.Name));
+        }
 
         public class Label
         {

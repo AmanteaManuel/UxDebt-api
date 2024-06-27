@@ -130,6 +130,40 @@ namespace UxDebt.Services
                         response.SetResponse(true, HttpStatusCode.OK, "No new issues found.", true);
                     }
 
+                    // 6. Update existing issues with new data
+                    foreach (GetIssueViewModel existingIssue in existingIssues)
+                    {
+                        //get the issue from the new list of issues
+                        var updatedIssue = allIssues.FirstOrDefault(gitIssue => gitIssue.GitId == existingIssue.GitId);
+                        bool needUpdate = false;
+                        //if already exist(should never be false)
+                        if (updatedIssue != null)
+                        {
+                            //conver labels to string and update with the new if i must
+                            var labelsTostring = LabelsToString(updatedIssue);
+                            if (labelsTostring != existingIssue.Labels)
+                            {
+                                existingIssue.Labels = labelsTostring;
+                                needUpdate = true;
+                            }                       
+                            
+                            //if the close date change change it
+                            if (updatedIssue.ClosedAt != existingIssue.ClosedAt)
+                            {
+                                existingIssue.ClosedAt = updatedIssue.ClosedAt;
+                                needUpdate = true;
+                            }
+
+                            if(needUpdate)
+                            {
+                                //mapp the new object and update
+                                var i = _mapper.Map<IssueViewModel>(existingIssue);
+                                await _issueService.Update(existingIssue.IssueId, i);
+                            }
+                            needUpdate = false;
+                        }
+                    }
+
                     transaction.Complete();
                 }
             }
@@ -138,17 +172,14 @@ namespace UxDebt.Services
                 return response.SetResponse(false, HttpStatusCode.InternalServerError, $"Error updating repository: {ex.Message}", false);
             }
             return response;
-        }       
+        }
 
         private async Task<List<Issue>> AddIssuesToDB(int repoId, List<IssueDto> issuesFromGit)
         {
             List<Issue> issuesToAdd = new List<Issue>();
             foreach (IssueDto issue in issuesFromGit)
             {
-
-                var concatenatedLabels = issue.Labels != null
-                ? string.Join(", ", issue.Labels.Select(label => label.Name))
-                : string.Empty;
+                string concatenatedLabels = LabelsToString(issue);
 
                 Issue i = new Issue()
                 {
@@ -156,7 +187,7 @@ namespace UxDebt.Services
                     HtmlUrl = issue.HtmlUrl,
                     Discarded = false,
                     CreatedAt = issue.CreateAt,
-                    ClosedAt = issue.CloseAt,
+                    ClosedAt = issue.ClosedAt,
                     Status = issue.Status,
                     Title = issue.Title,
                     Labels = concatenatedLabels,
@@ -168,6 +199,13 @@ namespace UxDebt.Services
 
             await _issueService.Create(issuesToAdd);
             return issuesToAdd;
+        }
+
+        private static string LabelsToString(IssueDto issue)
+        {
+            return issue.Labels != null
+                            ? string.Join(", ", issue.Labels.Select(label => label.Name))
+                            : string.Empty;
         }
 
         #region "API GIT"
@@ -228,6 +266,8 @@ namespace UxDebt.Services
             {
                 var request = new HttpRequestMessage(HttpMethod.Get, url); 
                 request.Headers.Add("Authorization", "Bearer " + _configuration.GetSection("External").GetSection("GitKey").Value);
+                request.Headers.Add("State", "all");
+
                 _httpClient.DefaultRequestHeaders.Add("User-Agent", "request");
 
                 var responseSendAsync = await _httpClient.SendAsync(request);

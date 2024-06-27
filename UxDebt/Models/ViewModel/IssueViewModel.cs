@@ -24,6 +24,7 @@ namespace UxDebt.Models.ViewModel
         public DateTime CreatedAt { get; set; }
         public DateTime? ClosedAt { get; set; }
         public string? Observation { get; set; }
+        public string? Labels { get; set; }
 
     }
 }

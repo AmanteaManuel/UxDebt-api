@@ -16,9 +16,8 @@ namespace UxDebt.Mappers
             CreateMap<Issue, GetIssueViewModel>()
             .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.IssueTags.Select(it => it.Tag)));
 
+            CreateMap<IssueViewModel, GetIssueViewModel>().ReverseMap();
             CreateMap<Tag, TagViewModel>(); // Si necesitas un view model específico para Tag
-
-
         }
     }
 }
