@@ -36,14 +36,13 @@ namespace UxDebt.Services
                 throw new Exception(ex.Message);
             }
         }
-        public async Task<List<int>> Create(List<Issue> issues)
+        public async Task<bool> Create(List<Issue> issues)
         {
             try
             {
                 _context.AddRange(issues);
                 await _context.SaveChangesAsync();
-                List<int> response = issues.Select(x => x.IssueId).ToList(); //we can delete this to improve performance if we do not need
-                return response; 
+                return true; 
             }
             catch (Exception ex)
             {

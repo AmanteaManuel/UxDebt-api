@@ -10,7 +10,7 @@ namespace UxDebt.Services.Interfaces
     public interface IIssueService
     {
         Task<int> Create(IssueViewModel issue);
-        Task<List<int>> Create(List<Issue> issue);
+        Task<bool> Create(List<Issue> issue);
 
         Task<bool> Update(int id, IssueViewModel issue);
         Task<bool> Delete(int id);

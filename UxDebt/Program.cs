@@ -12,7 +12,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
-            builder.WithOrigins("http://localhost:3000") // Reemplaza con la URL de tu frontend
+            builder.WithOrigins("http://localhost:3001") // Reemplaza con la URL de tu frontend
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
@@ -34,23 +34,23 @@ builder.Services.AddScoped(typeof(IIssueService), typeof(IssueService));
 builder.Services.AddScoped(typeof(IRepositoryService), typeof(RepositoryService));
 builder.Services.AddScoped(typeof(ITagService), typeof(TagService));
 
-
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+
+//using (var scope = app.Services.CreateScope())
+//{
+//    var context = scope.ServiceProvider.GetRequiredService<UxDebtContext>();
+//    context.Database.Migrate();
+//}
+
+
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-    var context = scope.ServiceProvider.GetRequiredService<UxDebtContext>();
-    context.Database.Migrate();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
-
-
-
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
 
 app.UseCors("AllowSpecificOrigin");
 

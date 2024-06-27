@@ -26,9 +26,8 @@ namespace UxDebt.Entities
 
         [Required]
         public bool Discarded { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Label>? Labels { get; set; }
+       
+        public string? Labels { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime? ClosedAt { get; set; }

@@ -15,7 +15,6 @@ namespace UxDebt.Context
 
         public DbSet<Issue> Issues { get; set; }
         public DbSet<Repository> Repositories { get; set; }
-        public DbSet<Label> Labels { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<IssueTag> IssueTags { get; set; }
 
@@ -36,9 +35,6 @@ namespace UxDebt.Context
             modelBuilder.Entity<Repository>(entity => {
                 entity.HasIndex(e => e.GitId).IsUnique();                
             });
-
-            modelBuilder.Entity<Label>().ToTable("Labels");
-
 
             modelBuilder.Entity<IssueTag>()
                .HasKey(it => new { it.IssueId, it.TagId });

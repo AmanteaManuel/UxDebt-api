@@ -43,6 +43,7 @@ namespace UxDebt.Services
                 using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
 
+                    
                     #region "Repo Validation and Creation"
 
                     //Get the issue from the DB
@@ -53,7 +54,7 @@ namespace UxDebt.Services
                     else
                         repoId = repo.RepositoryId;
 
-                    #endregion`
+                    #endregion                    
 
                     var issuesDtos = new List<IssueDto>();
                     issuesDtos = await GetAllIssuesFromGit(repositoryOwner, repositoryName);
@@ -62,7 +63,7 @@ namespace UxDebt.Services
 
                     transaction.Complete();
 
-                    return response.SetResponse(true, HttpStatusCode.OK, "Ok", issuesToAdded);
+                    return response.SetResponse(true, HttpStatusCode.OK, "Ok", null);
                 }
             }
             catch (Exception ex)
@@ -144,6 +145,11 @@ namespace UxDebt.Services
             List<Issue> issuesToAdd = new List<Issue>();
             foreach (IssueDto issue in issuesFromGit)
             {
+
+                var concatenatedLabels = issue.Labels != null
+                ? string.Join(", ", issue.Labels.Select(label => label.Name))
+                : string.Empty;
+
                 Issue i = new Issue()
                 {
                     GitId = issue.GitId,
@@ -153,6 +159,7 @@ namespace UxDebt.Services
                     ClosedAt = issue.CloseAt,
                     Status = issue.Status,
                     Title = issue.Title,
+                    Labels = concatenatedLabels,
                     RepositoryId = repoId
                 };
 
@@ -220,7 +227,7 @@ namespace UxDebt.Services
             while (pagesRemaining)
             {
                 var request = new HttpRequestMessage(HttpMethod.Get, url); 
-                request.Headers.Add("Authorization", _configuration.GetSection("External").GetSection("GitKey").Value);
+                request.Headers.Add("Authorization", "Bearer " + _configuration.GetSection("External").GetSection("GitKey").Value);
                 _httpClient.DefaultRequestHeaders.Add("User-Agent", "request");
 
                 var responseSendAsync = await _httpClient.SendAsync(request);

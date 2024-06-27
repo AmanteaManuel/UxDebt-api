@@ -12,7 +12,7 @@ namespace UxDebt.Models.ViewModel
         public Status Status { get; set; }
         public string Title { get; set; }
         public bool Discarded { get; set; }
-        public virtual ICollection<Label>? Labels { get; set; }
+        public string? Labels { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? ClosedAt { get; set; }
         public string? Observation { get; set; }

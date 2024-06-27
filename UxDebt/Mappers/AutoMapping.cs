@@ -14,8 +14,7 @@ namespace UxDebt.Mappers
             CreateMap<RepositoryViewModel, Repository>();
             CreateMap<Repository, RepositoryViewModel>();
             CreateMap<Issue, GetIssueViewModel>()
-            .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.IssueTags.Select(it => it.Tag)))
-            .ForMember(dest => dest.Labels, opt => opt.Ignore()); // Asumimos que no necesitas mapear Labels por ahora
+            .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.IssueTags.Select(it => it.Tag)));
 
             CreateMap<Tag, TagViewModel>(); // Si necesitas un view model específico para Tag
 
