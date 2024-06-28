@@ -9,8 +9,7 @@ namespace UxDebt.Models.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IssueTagId { get; set; }      
-        
+        public int IssueTagId { get; set; }        
 
         public int IssueId { get; set; }
         [ForeignKey("IssueId")]
