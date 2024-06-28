@@ -1,16 +1,28 @@
-Este documento tiene como proposito establecer los pasos para levantar el proyecto.
+# Instrucciones para Levantar el Proyecto
 
-Como primer paso hay que generar una Key de git para aumentar la capicidad maxima de los request hacia la API de Git adjunto link de guia.
-https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+Este documento tiene como propósito establecer los pasos necesarios para levantar el proyecto.
 
-Una vez tengamos el Token generado debemos colocarlo en el appSetting que se encuentra en el root del proyecto.
+## Paso 1: Generar una Key de GitHub
 
-Generar una base de datos vacia, obtener el conecction string y pisar el conecction string del appSetting con el suyo.
+Para aumentar la capacidad máxima de los requests hacia la API de GitHub, es necesario generar un token personal de acceso (PAT). Puedes seguir esta [guía oficial de GitHub](https://docs.github.com/es/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) para crear tu token.
 
-Como tercer paso debemos instalar los paquetes y compilar el proyecto para poder ejecutar las herramientas de Entity Framework (EF). (a continuacion se explicara como hacer un migration y update con entity framework si usted sabe como realizar estos pasos puede saltear la siguiente seccion)
-Buscar ruta del proyecto donde este el archivo: UxDebt.csproj
-Ejecutar en consola los siguientes comandos:
+Una vez que hayas generado el token, debes colocarlo en el archivo `appSettings` que se encuentra en la raíz del proyecto.
 
-cd "ruta de donde se encuentre UxDebt.csproj"
-dotnet ef migrations add InitialCreate
-dotnet ef database update
+## Paso 2: Configurar la Base de Datos
+
+1. Genera una base de datos vacía.
+2. Obtén la cadena de conexión (connection string) de tu base de datos.
+3. Reemplaza la cadena de conexión en el archivo `appSettings` con la tuya.
+
+## Paso 3: Instalar Paquetes y Compilar el Proyecto
+
+Para poder ejecutar las herramientas de Entity Framework (EF), es necesario instalar los paquetes y compilar el proyecto. A continuación, se explica cómo realizar una migración y actualización con Entity Framework. Si ya sabes cómo realizar estos pasos, puedes saltar a la siguiente sección.
+
+1. Navega a la ruta del proyecto donde se encuentra el archivo `UxDebt.csproj`.
+2. Ejecuta los siguientes comandos en la consola:
+
+    ```sh
+    cd "ruta/donde/se/encuentre/UxDebt.csproj"
+    dotnet ef migrations add InitialCreate
+    dotnet ef database update
+    ```
